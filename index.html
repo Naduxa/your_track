@@ -4,437 +4,252 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>🎵 Свой Трек. Создать песню</title>
-  <meta name="description" content="🎵 Свой Трек. Создать песню — Telegram-бот, который превращает твою идею или текст в готовый трек. Музыка, вокал, текст и обложка за несколько минут, помощь с публикацией на музыкальных площадках." />
-
+  <meta name="description" content="🎵 Свой Трек — Telegram-бот, который за несколько минут превращает твою идею или текст в личную песню: музыка, вокал, обложка и помощь с публикацией на площадках. Сделай трек-сюрприз, поздравление или свой первый релиз." />
+  
   <style>
     :root {
-      --bg-1: #fdf7ff;
-      --bg-2: #f4f4ff;
-      --bg-3: #ffeafd;
-      --ink: #1f1633;
-      --muted: #757291;
-      --accent: #ff4b9b;
-      --accent-2: #4b8bff;
-      --border: #e3ddff;
-      --card: #ffffff;
-      --radius-lg: 20px;
-      --max-width: 960px;
+      --bg1: #fff8ff;
+      --bg2: #eaf2ff;
+      --ink: #1e1440;
+      --muted: #6a6881;
+      --accent1: #ff4b9b;
+      --accent2: #6a7bff;
+      --radius: 18px;
+      --shadow: 0 10px 40px rgba(160, 130, 255, 0.25);
     }
 
     * { box-sizing: border-box; }
-
     html, body {
       margin: 0;
       padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--ink);
-      background: linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .page {
+      background: linear-gradient(135deg, var(--bg1), var(--bg2));
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      scroll-behavior: smooth;
     }
 
-    .wrap {
-      width: 100%;
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 20px 16px 32px;
-    }
+    a { color: inherit; text-decoration: none; }
 
     header {
-      padding: 10px 0 8px;
       display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .header-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo {
-      width: 64px;
-      height: 64px;
-      border-radius: 16px;
-      background: radial-gradient(circle at 0 0, #ffffff 0, #ffd9ff 40%, #7f5dff 100%);
-      display: flex;
-      align-items: center;
       justify-content: center;
-      overflow: hidden;
-      flex-shrink: 0;
+      padding: 40px 20px 20px;
+      text-align: center;
     }
 
     .logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+      width: 72px;
+      height: 72px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(255, 75, 155, 0.25);
     }
 
-    .brand-title {
-      font-size: 18px;
+    h1 {
+      font-size: clamp(26px, 5vw, 36px);
+      margin: 16px 0 10px;
       font-weight: 800;
-      letter-spacing: 0.04em;
-      text-transform: none;
-    }
-
-    .brand-sub {
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    nav {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      font-size: 13px;
-    }
-
-    nav a {
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.7);
-      color: var(--muted);
-    }
-
-    main {
-      flex: 1;
-      margin-top: 10px;
-    }
-
-    .hero {
-      background: var(--card);
-      border-radius: 24px;
-      border: 1px solid var(--border);
-      padding: 22px 20px 20px;
-      display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
-      gap: 18px;
-      box-shadow: 0 18px 40px rgba(170,152,255,0.25);
-    }
-
-    .hero-title {
-      font-size: clamp(24px, 4vw, 30px);
-      line-height: 1.15;
-      margin: 0 0 10px;
-    }
-
-    .hero-title span {
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
       -webkit-background-clip: text;
       color: transparent;
     }
 
-    .hero-text {
+    .subtitle {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 26px;
+      line-height: 1.6;
+    }
+
+    .main-btn {
+      display: inline-block;
+      padding: 18px 34px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      border: none;
+      border-radius: 999px;
+      box-shadow: 0 12px 40px rgba(120, 100, 255, 0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .main-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 50px rgba(120, 100, 255, 0.5);
+    }
+
+    .note {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    main {
+      text-align: center;
+      padding: 0 20px 60px;
+    }
+
+    section {
+      margin-top: 60px;
+      max-width: 880px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-bottom: 10px;
+      color: var(--ink);
+    }
+
+    p {
       font-size: 15px;
       color: var(--muted);
-      margin: 0 0 14px;
-      max-width: 430px;
+      line-height: 1.6;
+      margin-bottom: 24px;
     }
 
-    .hero-bullets {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 18px;
-      font-size: 14px;
-      color: var(--muted);
-    }
-
-    .hero-bullets li {
-      margin-bottom: 4px;
-    }
-
-    .hero-bullets strong {
-      color: var(--ink);
-      font-weight: 600;
-    }
-
-    .hero-cta {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      max-width: 360px;
-    }
-
-    .btn-main {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      padding: 14px 28px;
-      font-size: 16px;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #ffffff;
-      box-shadow: 0 14px 32px rgba(150, 110, 255, 0.5);
-      transition: transform 0.12s ease, box-shadow 0.12s ease;
-      text-align: center;
-      width: 100%;
-    }
-
-    .btn-main:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 18px 40px rgba(150, 110, 255, 0.65);
-    }
-
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 999px;
-      padding: 10px 18px;
-      font-size: 14px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.9);
-      color: var(--muted);
-      text-align: center;
-    }
-
-    .hero-note {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .hero-side {
-      border-radius: 18px;
-      background: rgba(249,247,255,0.9);
-      border: 1px solid var(--border);
-      padding: 14px 14px 12px;
-      font-size: 13px;
-    }
-
-    .hero-side-title {
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
-
-    .hero-side-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .hero-side-list li {
-      margin-bottom: 4px;
-    }
-
-    .section {
-      margin-top: 18px;
-      background: rgba(255,255,255,0.9);
-      border-radius: 18px;
-      border: 1px solid var(--border);
-      padding: 16px 16px 14px;
-      font-size: 14px;
-    }
-
-    .section h2 {
-      margin: 0 0 8px;
-      font-size: 18px;
-    }
-
-    .section p {
-      margin: 0 0 10px;
-      color: var(--muted);
-    }
-
-    .examples {
+    .cards {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 6px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      margin-top: 20px;
     }
 
-    .example-card {
-      background: #ffffff;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      padding: 10px 11px;
-      font-size: 13px;
+    .card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px 18px 22px;
+      text-align: left;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
-    .example-title {
-      font-weight: 600;
-      margin-bottom: 4px;
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(150, 130, 255, 0.35);
     }
 
-    .example-caption {
-      color: var(--muted);
-      font-size: 12px;
+    .card-title {
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--accent2);
     }
 
     footer {
-      margin-top: 20px;
-      border-top: 1px solid var(--border);
-    }
-
-    .footer-inner {
-      padding: 14px 0 28px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: space-between;
-      font-size: 12px;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      padding: 24px;
+      text-align: center;
+      font-size: 13px;
       color: var(--muted);
     }
 
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .footer-links a {
+    footer a {
       color: var(--muted);
-    }
-
-    .footer-links a:hover {
       text-decoration: underline;
     }
 
-    @media (max-width: 720px) {
-      .hero {
-        grid-template-columns: minmax(0, 1fr);
-        padding: 18px 14px 16px;
-      }
-      .hero-cta {
-        max-width: 100%;
-      }
-      .examples {
-        grid-template-columns: minmax(0, 1fr);
+    .fade-in {
+      opacity: 0;
+      transform: translateY(15px);
+      animation: fade 0.8s ease forwards;
+    }
+
+    @keyframes fade {
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <div class="wrap">
-      <header>
-        <div class="header-top">
-          <div class="brand">
-            <div class="logo">
-              <!-- Положи файл логотипа в корень сайта как logo.png (или logo.jpg) и при необходимости поменяй src -->
-              <img src="logo.png" alt="🎵 Свой Трек. Создать песню" loading="lazy">
-            </div>
-            <div>
-              <div class="brand-title">🎵 Свой Трек. Создать песню</div>
-              <div class="brand-sub">Телеграм-бот, который делает трек по твоей идее или тексту</div>
-            </div>
-          </div>
-          <nav>
-            <a href="offer.html">Оферта</a>
-            <a href="privacy.html">Политика конфиденциальности</a>
-          </nav>
-        </div>
-      </header>
-
-      <main>
-        <section class="hero">
-          <div>
-            <h1 class="hero-title">Создай свой трек <span>за несколько минут</span></h1>
-            <p class="hero-text">
-              Пишешь боту идею или текст — получаешь готовую песню с музыкой, вокалом и обложкой.
-            </p>
-
-            <ul class="hero-bullets">
-              <li><strong>Твой текст или запрос.</strong> Можно прислать свои стихи или попросить бота написать текст по идее.</li>
-              <li><strong>Готовая песня.</strong> ИИ собирает музыку, голос и аранжировку под твою историю.</li>
-              <li><strong>Публикация.</strong> Помогаем выпустить трек на музыкальных площадках.</li>
-            </ul>
-
-            <div class="hero-cta">
-              <a class="btn-main" href="https://t.me/your_trackbot?start=st" target="_blank" rel="noopener noreferrer">
-                Перейти в бота «Свой Трек»
-              </a>
-              <a class="btn-secondary" href="https://t.me/intromirmusic" target="_blank" rel="noopener noreferrer">
-                Посмотреть примеры работ
-              </a>
-              <div class="hero-note">
-                Можно не уметь писать стихи — бот поможет сформулировать запрос и мягко подредактирует текст.
-              </div>
-            </div>
-          </div>
-
-          <aside class="hero-side">
-            <div class="hero-side-title">Что можно сделать</div>
-            <ul class="hero-side-list">
-              <li>• Песня-сюрприз любимому человеку.</li>
-              <li>• Поздравление с днём рождения или свадьбой.</li>
-              <li>• Трогательный трек для мамы или друга.</li>
-              <li>• Авторская песня по твоим стихам.</li>
-            </ul>
-          </aside>
-        </section>
-
-        <section class="section">
-          <h2>Примеры форматов</h2>
-          <p>Через «Свой Трек» можно собрать разные типы песен:</p>
-          <div class="examples">
-            <div class="example-card">
-              <div class="example-title">Песня-сюрприз</div>
-              <div class="example-caption">
-                Личное послание в формате трека: для партнёра, мамы, друга или коллеги — вместо открытки или длинного сообщения.
-              </div>
-            </div>
-            <div class="example-card">
-              <div class="example-title">Поздравление</div>
-              <div class="example-caption">
-                Песня к дню рождения, свадьбе или важной дате — с упоминанием имен, шуток и деталей из жизни.
-              </div>
-            </div>
-            <div class="example-card">
-              <div class="example-title">Авторский трек</div>
-              <div class="example-caption">
-                Если ты пишешь стихи, можешь реализовать себя как автор песен. Мы помогаем оформить и опубликовать трек.
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section">
-          <h2>Права и использование</h2>
-          <p>
-            Треки, созданные через «Свой Трек», можно использовать в личных и коммерческих проектах</a>.
-          </p>
-        </section>
-      </main>
-
-      <footer>
-        <div class="footer-inner">
-          <div>© <span id="y"></span> «Свой Трек»</div>
-          <div class="footer-links">
-            <a href="offer.html">Оферта</a>
-            <a href="privacy.html">Политика конфиденциальности</a>
-            <a href="https://t.me/your_trackbot?start=st" target="_blank" rel="noopener noreferrer">Перейти в бота</a>
-          </div>
-        </div>
-      </footer>
+  <header>
+    <div>
+      <div class="logo fade-in">
+        <img src="logo.png" alt="🎵 Свой Трек. Создать песню" loading="lazy">
+      </div>
+      <h1 class="fade-in">🎵 Свой Трек. Создать песню</h1>
+      <div class="subtitle fade-in">
+        Всегда хотела услышать свою историю в песне?<br>
+        «Свой Трек» за несколько минут превращает твою идею или текст в личный трек с музыкой, голосом и обложкой.
+      </div>
+      <a class="main-btn fade-in" href="https://t.me/your_trackbot?start=st" target="_blank" rel="noopener noreferrer">
+        Создать песню в боте «Свой Трек»
+      </a>
+      <div class="note fade-in">
+        Не нужна студия, музыканты и опыт в написании песен — достаточно пары строк или описания, остальное сделает бот.
+      </div>
     </div>
-  </div>
+  </header>
+
+  <main>
+    <section class="fade-in">
+      <h2>Как это работает</h2>
+      <p>
+        Ты делишься идеей, чувствами или черновиком текста — ИИ аккуратно собирает из этого песню.<br>
+        Можно использовать свои стихи или попросить бота написать текст по твоему запросу.
+      </p>
+      <div class="cards">
+        <div class="card">
+          <div class="card-title">1. Расскажи идею</div>
+          <p>Опиши ситуацию, человека или повод: «хочу трек-сюрприз для мужа», «песня для мамы», «у меня есть стихи».</p>
+        </div>
+        <div class="card">
+          <div class="card-title">2. Получи готовую песню</div>
+          <p>Бот предложит текст, подберёт стиль, музыку и голос. Ты услышишь, как твоя история звучит в песне.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">3. Используй где хочешь</div>
+          <p>Отправь трек близким, выложи в соцсети или оформь релиз на стримингах — мы с этим помогаем.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="fade-in">
+      <h2>Для каких случаев подойдёт</h2>
+      <p>«Свой Трек» — когда хочется не просто слов, а песни, которая остаётся.</p>
+      <div class="cards">
+        <div class="card">
+          <div class="card-title">Песня-сюрприз</div>
+          <p>
+            Трек вместо длинного текста в мессенджере: признание, спасибо или поддержка,
+            которое человек может переслушивать снова и снова.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Поздравление</div>
+          <p>
+            Песня к дню рождения, свадьбе или важной дате. В тексте можно упомянуть имена, шутки и моменты,
+            понятные только вам.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Авторский трек по стихам</div>
+          <p>
+            Если ты пишешь стихи, можешь реализовать себя как автор песен: бот поможет превратить строки в трек,
+            а мы — оформить релиз.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="fade-in">
+      <h2>Публикация и права</h2>
+      <p>
+        Мы помогаем выпустить песни на музыкальных площадках — чтобы твой трек можно было слушать в любимых сервисах.<br>
+        Использовать песню в личных и коммерческих проектах можно с учётом
+        <a href="offer.html">оферты</a> и <a href="privacy.html">политики конфиденциальности</a>.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="y"></span> «Свой Трек» · 
+    <a href="offer.html">Оферта</a> · 
+    <a href="privacy.html">Политика конфиденциальности</a>
+  </footer>
 
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
